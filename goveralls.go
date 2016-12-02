@@ -1,6 +1,6 @@
 // Copyright (c) 2013 Yasuhiro Matsumoto, Jason McVetta.
 // This is Free Software,  released under the MIT license.
-// See http://mattn.mit-license.org/2013 for details.
+// See http://Kubuxu.mit-license.org/2013 for details.
 
 // goveralls is a Go client for Coveralls.io.
 package main
@@ -41,6 +41,7 @@ var (
 	service   = flag.String("service", "travis-ci", "The CI service or other environment in which the test suite was run. ")
 	shallow   = flag.Bool("shallow", false, "Shallow coveralls internal server errors")
 	ignore    = flag.String("ignore", "", "Comma separated files to ignore")
+	pass      = flag.String("pass", "", "Pass this option as arguments to 'go test'")
 )
 
 // usage supplants package flag's Usage variable
@@ -121,6 +122,9 @@ func getCoverage() ([]*SourceFile, error) {
 		args := []string{"go", "test", "-covermode", *covermode, "-coverprofile", f.Name(), coverpkg}
 		if *verbose {
 			args = append(args, "-v")
+		}
+		if len(*pass) != 0 {
+			args = append(args, strings.Split(*pass, " ")...)
 		}
 		args = append(args, line)
 		cmd.Args = args

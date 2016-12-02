@@ -46,8 +46,8 @@ func TestGoveralls(t *testing.T) {
 		os.Chdir(wd)
 		os.RemoveAll(tmp)
 	}()
-	runCmd(t, "go", "get", "github.com/mattn/goveralls/tester")
-	b := runCmd(t, "goveralls", "-package=github.com/mattn/goveralls/tester")
+	runCmd(t, "go", "get", "github.com/Kubuxu/goveralls/tester")
+	b := runCmd(t, "goveralls", "-package=github.com/Kubuxu/goveralls/tester")
 	lines := strings.Split(strings.TrimSpace(string(b)), "\n")
 	s := lines[len(lines)-1]
 	if s != "Succeeded" {
@@ -58,7 +58,7 @@ func TestGoveralls(t *testing.T) {
 func prepareTest(t *testing.T) (tmpPath string) {
 	tmp := os.TempDir()
 	tmp = filepath.Join(tmp, uuid.New())
-	runCmd(t, "go", "build", "-o", filepath.Join(tmp, "bin", "goveralls"), "github.com/mattn/goveralls")
+	runCmd(t, "go", "build", "-o", filepath.Join(tmp, "bin", "goveralls"), "github.com/Kubuxu/goveralls")
 	os.Setenv("PATH", filepath.Join(tmp, "bin")+string(filepath.ListSeparator)+os.Getenv("PATH"))
 	os.MkdirAll(filepath.Join(tmp, "src"), 0755)
 	return tmp
